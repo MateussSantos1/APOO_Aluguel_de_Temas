@@ -16,15 +16,15 @@
                 @Html.HiddenFor(model => model.TemaId)
                 <div class="form-group">
                     @Html.LabelFor(model => model.Nome, htmlAttributes:
-                         new { @class = "control-label col-md-2" })
+                              new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.Nome, new
                         {
                             htmlAttributes =
-                             new { @class = "form-control" }
+                                  new { @class = "form-control" }
                         })
                         @Html.ValidationMessageFor(model => model.Nome, "",
-                             new { @class = "text-danger" })
+                                  new { @class = "text-danger" })
                     </div>
                 </div>
 
@@ -34,19 +34,31 @@
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.Cor, htmlAttributes:
-                         new { @class = "control-label col-md-2" })
+                              new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.Cor, new
                         {
                             htmlAttributes =
-                             new { @class = "form-control" }
+                                  new { @class = "form-control" }
                         })
                         @Html.ValidationMessageFor(model => model.Cor, "",
-                             new { @class = "text-danger" })
+                                  new { @class = "text-danger" })
                     </div>
                 </div>
 
-
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ValorAluguel, htmlAttributes:
+                              new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ValorAluguel, new
+                        {
+                            htmlAttributes =
+                                  new { @class = "form-control" }
+                        })
+                        @Html.ValidationMessageFor(model => model.ValorAluguel, "",
+                                  new { @class = "text-danger" })
+                    </div>
+                </div>
 
 
             </div>

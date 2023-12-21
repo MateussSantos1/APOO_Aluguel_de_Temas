@@ -28,6 +28,9 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Cor)
                     </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ValorAluguel)
+                    </th>
                     <th></th>
                 </tr>
             </thead>
@@ -44,6 +47,10 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Cor)
                     </td>
+                    <td>
+                        <b>R$</b> @Html.DisplayFor(modelItem => item.ValorAluguel)
+                    </td>
+
                     <td>
                         @Html.ActionLink("Alterar", "Edit", new { id = item.TemaId }) |
                         @Html.ActionLink("Detalhes", "Details", new { id = item.TemaId }) |

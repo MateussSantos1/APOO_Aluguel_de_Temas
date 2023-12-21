@@ -11,6 +11,7 @@ namespace exercicio_cap4.Models
         public long TemaId { get; set; }
         public string Nome { get; set; }
         public string Cor { get; set; }
+        public double ValorAluguel { get; set; }
         public virtual ICollection<ItemTema> ItemTemas{ get; set; }
 
     }
