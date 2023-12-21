@@ -25,25 +25,31 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Nome)
                     </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Cor)
+                    </th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TemaId)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Nome)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Alterar", "Edit", new { id = item.TemaId }) |
-                            @Html.ActionLink("Detalhes", "Details", new { id = item.TemaId }) |
-                            @Html.ActionLink("Eliminar", "Delete", new { id = item.TemaId})
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TemaId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cor)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Alterar", "Edit", new { id = item.TemaId }) |
+                        @Html.ActionLink("Detalhes", "Details", new { id = item.TemaId }) |
+                        @Html.ActionLink("Eliminar", "Delete", new { id = item.TemaId })
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>
