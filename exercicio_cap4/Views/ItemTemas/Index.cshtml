@@ -1,0 +1,74 @@
+﻿@model IEnumerable<exercicio_cap4.Models.ItemTema>
+@{
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+    ViewBag.Title = "Listagem de ItemS";
+}
+@if (@TempData["Message"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Message"]
+    </div>
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Relação de ItemS registrados
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ItemTemaId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Nome)
+                    </th>
+                    <th>Tema</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ItemTemaId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nome)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Tema.Nome)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Alterar", "Edit", new { id = item.ItemTemaId }) |
+                            @Html.ActionLink("Detalhes", "Details", new { id = item.ItemTemaId }) |
+                            @Html.ActionLink("Eliminar", "Delete", new { id = item.ItemTemaId })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="panel-footer panel-info">
+        @Html.ActionLink("Registrar um novo Item", "Create", null,
+        new { @class = "btn btn-success" })
+    </div>
+</div>
+
+@section styles{
+    <link href="@Url.Content("~/content/DataTables/css/dataTables.bootstrap.css")"
+          rel="stylesheet">
+}
+@section ScriptPage {
+    <script src=" @Url.Content("~/scripts/DataTables/jquery. dataTables.js")"></script>
+    <script src="@Url.Content("~/scripts/DataTables/dataTables.bootstrap.js")"></script>
+    <script type="text/javascript">
+$(document).ready(function () {
+$('li').removeClass("active");
+$('#liItemTemas').addClass("active");
+$('.table').dataTable({
+"order": [[1, "asc"]]
+});
+});
+    </script>
+}

@@ -1,0 +1,52 @@
+﻿@model exercicio_cap4.Models.ItemTema
+@{
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+    ViewBag.Title = "Visualizando os dados de um Item";
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Visualizando detalhes de um Item
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nome)<br />
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-user"></i>
+                </span>
+                @Html.EditorFor(model => model.Nome, new
+                {
+                    htmlAttributes =
+                new { @class = "form-control", disabled = "disabled" }
+                })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Tema.Nome)<br />
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-user"></i>
+                </span>
+                @Html.EditorFor(model => model.Tema.Nome, new
+                {
+                    htmlAttributes =
+                new { @class = "form-control", disabled = "disabled" }
+                })
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer panel-info">
+        @Html.ActionLink("Alterar", "Edit", new { id = Model.ItemTemaId },
+        new { @class = "btn btn-info" })
+        @Html.ActionLink("Retornar para a listagem", "Index", null,
+        new { @class = "btn btn-info" })
+    </div>
+</div>
+@section ScriptPage {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('li').removeClass("active");
+            $('#liItemTemas').addClass("active");
+        });
+    </script>
+}

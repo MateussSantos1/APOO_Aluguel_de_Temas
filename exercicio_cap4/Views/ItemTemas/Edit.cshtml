@@ -1,0 +1,61 @@
+﻿@model exercicio_cap4.Models.ItemTema
+@{
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+    ViewBag.Title = "Visualizando os dados de um Item";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Alteração dos dados de um Item
+        </div>
+        <div class="panel-body">
+            <div class="form-horizontal">
+                <h4>ItemTema</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.ItemTemaId)
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Nome, htmlAttributes:
+                    new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Nome, new
+                        {
+                            htmlAttributes =
+                        new { @class = "form-control" }
+                        })
+                        @Html.ValidationMessageFor(model => model.Nome, "", new
+                        {
+                            @class =
+                        "text-danger"
+                        })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TemaId, "TemaId", htmlAttributes:
+                    new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("TemaId", null, htmlAttributes:
+                        new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.TemaId, "",
+                        new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Gravar alterações" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section ScriptPage {
+    <script type="text/javascript">
+$(document).ready(function () {
+$('li').removeClass("active");
+$('#liItemTemas').addClass("active");
+});
+    </script>
+}
