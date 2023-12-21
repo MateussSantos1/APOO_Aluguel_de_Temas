@@ -23,28 +23,34 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Nome)
                     </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Descricao)
+                    </th>
                     <th>Tema</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ItemTemaId)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Nome)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Tema.Nome)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Alterar", "Edit", new { id = item.ItemTemaId }) |
-                            @Html.ActionLink("Detalhes", "Details", new { id = item.ItemTemaId }) |
-                            @Html.ActionLink("Eliminar", "Delete", new { id = item.ItemTemaId })
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ItemTemaId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Descricao)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tema.Nome)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Alterar", "Edit", new { id = item.ItemTemaId }) |
+                        @Html.ActionLink("Detalhes", "Details", new { id = item.ItemTemaId }) |
+                        @Html.ActionLink("Eliminar", "Delete", new { id = item.ItemTemaId })
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>

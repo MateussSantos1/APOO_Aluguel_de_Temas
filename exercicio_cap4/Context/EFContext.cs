@@ -15,6 +15,20 @@ namespace exercicio_cap4.Models
         }
         public DbSet<Tema> Temas { get; set; }
         public DbSet<ItemTema> ItemTemas { get; set; }
+
+
+
+
+        //HABILITAR A EXCLUSAO EM CASCATA DO TEMA E ITEM TEMA
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ItemTema>()
+                .HasRequired(i => i.Tema)
+                .WithMany(t => t.ItemTemas)
+                .HasForeignKey(i => i.TemaId)
+                .WillCascadeOnDelete(true);
+        }
+
     }
 
 }

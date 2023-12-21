@@ -9,6 +9,7 @@ namespace exercicio_cap4.Models
         [Key] // Adicione esta anotação
         public long? ItemTemaId { get; set; }
         public string Nome { get; set; }
+        public string Descricao { get; set; }
         public long? TemaId { get; set; }
         public Tema Tema { get; set; }
     }
