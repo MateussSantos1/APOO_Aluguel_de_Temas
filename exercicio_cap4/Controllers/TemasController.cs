@@ -5,20 +5,22 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using exercicio_cap4.DAL;
 using exercicio_cap4.Models;
 
 namespace exercicio_cap4.Controllers
 {
     public class TemasController : Controller
     {
-        private EFContext context = new EFContext();
+        private TemaDAL temaDAL = new TemaDAL();
+
         // GET: Temas
         public ActionResult Index()
         {
-            return View(
-                context.Temas.OrderBy(c => c.Nome)
-            );
+            var temas = temaDAL.TodososTemas();
+            return View(temas);
         }
+
         public ActionResult Create()
         {
             return View();
@@ -31,12 +33,12 @@ namespace exercicio_cap4.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tema Tema = context.Temas.Find(id);
-            if (Tema == null)
+            Tema tema = temaDAL.TemasporID(id);
+            if (tema == null)
             {
                 return HttpNotFound();
             }
-            return View(Tema);
+            return View(tema);
         }
 
         // GET: Temas/Details/5
@@ -46,13 +48,12 @@ namespace exercicio_cap4.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tema Tema = context.Temas.Where(f => f.TemaId == id).
-            Include("ItemTemas.Tema").First();
-            if (Tema == null)
+            Tema tema = temaDAL.TemasporID(id);
+            if (tema == null)
             {
                 return HttpNotFound();
             }
-            return View(Tema);
+            return View(tema);
         }
 
         // POST: Temas/Delete/1
@@ -60,47 +61,44 @@ namespace exercicio_cap4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(long id)
         {
-            Tema Tema = context.Temas.Find(id);
-            context.Temas.Remove(Tema);
-            context.SaveChanges();
-            TempData["Message"] = "Tema \"" + Tema.Nome + "\" foi removido";
+            temaDAL.DeletarTema(id);
+            TempData["Message"] = "Tema foi removido";
             return RedirectToAction("Index");
         }
+
         public ActionResult Delete(long? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tema Tema = context.Temas.Find(id);
-            if (Tema == null)
+            Tema tema = temaDAL.TemasporID(id);
+            if (tema == null)
             {
                 return HttpNotFound();
             }
-            return View(Tema);
+            return View(tema);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Tema Tema)
+        public ActionResult Edit(Tema tema)
         {
             if (ModelState.IsValid)
             {
-                context.Entry(Tema).State = EntityState.Modified;
-                context.SaveChanges();
-                TempData["Message"] = "Tema \"" + Tema.Nome + "\" foi modificado";
+                temaDAL.AtualizarTema(tema);
+                TempData["Message"] = "Tema foi modificado";
                 return RedirectToAction("Index");
             }
-            return View(Tema);
+            return View(tema);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Tema Tema)
+        public ActionResult Create(Tema tema)
         {
-            context.Temas.Add(Tema);
-            context.SaveChanges();
-            TempData["Message"] = "Categprico \"" + Tema.Nome + "\" foi registrado";
+            temaDAL.AdicionarTema(tema);
+            TempData["Message"] = "Tema foi registrado";
             return RedirectToAction("Index");
         }
     }

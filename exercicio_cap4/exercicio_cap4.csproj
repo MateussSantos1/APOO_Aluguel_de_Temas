@@ -206,6 +206,8 @@
     <Compile Include="Controllers\TemasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemTemasController.cs" />
+    <Compile Include="DAL\ItemTemaDAL.cs" />
+    <Compile Include="DAL\TemaDAL.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

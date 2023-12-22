@@ -6,18 +6,19 @@ using System.Data.Entity;
 using System.Web.Mvc;
 using exercicio_cap4.Models;
 using System.Net;
+using exercicio_cap4.DAL;
 
 namespace exercicio_cap4.Controllers
 {
     public class ItemTemasController : Controller
     {
-        private EFContext context = new EFContext();
+        private ItemTemaDAL itemTemaDAL = new ItemTemaDAL();
+        private TemaDAL temaDal = new TemaDAL();
+
         // GET: ItemTemas
         public ActionResult Index()
         {
-            var items =
-            context.ItemTemas.Include(c => c.Tema).
-            OrderBy(n => n.Nome);
+            var items = itemTemaDAL.TodosOsItensTemas();
             return View(items);
         }
 
@@ -28,8 +29,7 @@ namespace exercicio_cap4.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ItemTema item = context.ItemTemas.Where(p => p.ItemTemaId == id).
-            Include(c => c.Tema).First();
+            ItemTema item = itemTemaDAL.ItemTemaPorID(id);
 
             if (item == null)
             {
@@ -41,10 +41,9 @@ namespace exercicio_cap4.Controllers
         // GET: ItemTemas/Create
         public ActionResult Create()
         {
-            ViewBag.TemaId = new SelectList(context.Temas.OrderBy(b => b.Nome),
+            ViewBag.Temas = new SelectList(temaDal.TodososTemas(), "TemaId", "Nome");
+            ViewBag.TemaId = new SelectList(itemTemaDAL.TodosOsItensTemas().OrderBy(b => b.Nome),
             "TemaId", "Nome");
-            //ViewBag.FabricanteId = new SelectList(context.Fabricantes.OrderBy(b => b.Nome),
-           // "FabricanteId", "Nome");
             return View();
         }
 
@@ -54,8 +53,7 @@ namespace exercicio_cap4.Controllers
         {
             try
             {
-                context.ItemTemas.Add(item);
-                context.SaveChanges();
+                itemTemaDAL.AdicionarItemTema(item);
                 return RedirectToAction("Index");
             }
             catch
@@ -71,15 +69,14 @@ namespace exercicio_cap4.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ItemTema item = context.ItemTemas.Find(id);
+            ItemTema item = itemTemaDAL.ItemTemaPorID(id);
+
             if (item == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.TemaId = new SelectList(context.Temas.OrderBy(b => b.Nome), "TemaId",
-            "Nome", item.TemaId);
-            //ViewBag.FabricanteId = new SelectList(context.Fabricantes.OrderBy(b => b.Nome), "FabricanteId",
-            //"Nome", item.FabricanteId);
+
+            ViewBag.TemaId = new SelectList(itemTemaDAL.TodosOsItensTemas().OrderBy(b => b.Nome), "TemaId", "Nome", item.TemaId);
             return View(item);
         }
 
@@ -90,8 +87,7 @@ namespace exercicio_cap4.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    context.Entry(item).State = EntityState.Modified;
-                    context.SaveChanges();
+                    itemTemaDAL.AtualizarItemTema(item);
                     return RedirectToAction("Index");
                 }
                 return View(item);
@@ -109,8 +105,8 @@ namespace exercicio_cap4.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ItemTema item = context.ItemTemas.Where(p => p.ItemTemaId == id).
-            Include(c => c.Tema).First();
+            ItemTema item = itemTemaDAL.ItemTemaPorID(id);
+
             if (item == null)
             {
                 return HttpNotFound();
@@ -120,14 +116,12 @@ namespace exercicio_cap4.Controllers
 
         // POST: ItemTemas/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(long id)
         {
             try
             {
-                ItemTema item = context.ItemTemas.Find(id);
-                context.ItemTemas.Remove(item);
-                context.SaveChanges();
-                TempData["Message"] = "ItemTema " + item.Nome.ToUpper() + " foi removido";
+                itemTemaDAL.DeletarItemTema(id);
+                TempData["Message"] = "ItemTema foi removido";
                 return RedirectToAction("Index");
             }
             catch
