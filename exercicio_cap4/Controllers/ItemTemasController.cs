@@ -1,24 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Data.Entity;
-using System.Web.Mvc;
-using exercicio_cap4.Models;
+using System.Linq;
 using System.Net;
-using exercicio_cap4.DAL;
+using System.Web;
+using System.Web.Mvc;
+using exercicio_cap4.Services;
+using exercicio_cap4.Models;
 
 namespace exercicio_cap4.Controllers
 {
     public class ItemTemasController : Controller
     {
-        private ItemTemaDAL itemTemaDAL = new ItemTemaDAL();
-        private TemaDAL temaDal = new TemaDAL();
+        private ItemTemaService itemTemaService = new ItemTemaService();
+        private TemaService temaService = new TemaService();
 
         // GET: ItemTemas
         public ActionResult Index()
         {
-            var items = itemTemaDAL.TodosOsItensTemas();
+            var items = itemTemaService.TodosOsItensTemas();
             return View(items);
         }
 
@@ -29,7 +29,7 @@ namespace exercicio_cap4.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ItemTema item = itemTemaDAL.ItemTemaPorID(id);
+            ItemTema item = itemTemaService.ItemTemaPorID(id);
 
             if (item == null)
             {
@@ -41,8 +41,8 @@ namespace exercicio_cap4.Controllers
         // GET: ItemTemas/Create
         public ActionResult Create()
         {
-            ViewBag.Temas = new SelectList(temaDal.TodososTemas(), "TemaId", "Nome");
-            ViewBag.TemaId = new SelectList(itemTemaDAL.TodosOsItensTemas().OrderBy(b => b.Nome),
+            ViewBag.Temas = new SelectList(temaService.TodososTemas(), "TemaId", "Nome");
+            ViewBag.TemaId = new SelectList(itemTemaService.TodosOsItensTemas().OrderBy(b => b.Nome),
             "TemaId", "Nome");
             return View();
         }
@@ -53,7 +53,7 @@ namespace exercicio_cap4.Controllers
         {
             try
             {
-                itemTemaDAL.AdicionarItemTema(item);
+                itemTemaService.AdicionarItemTema(item);
                 return RedirectToAction("Index");
             }
             catch
@@ -69,14 +69,14 @@ namespace exercicio_cap4.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ItemTema item = itemTemaDAL.ItemTemaPorID(id);
+            ItemTema item = itemTemaService.ItemTemaPorID(id);
 
             if (item == null)
             {
                 return HttpNotFound();
             }
 
-            ViewBag.TemaId = new SelectList(itemTemaDAL.TodosOsItensTemas().OrderBy(b => b.Nome), "TemaId", "Nome", item.TemaId);
+            ViewBag.TemaId = new SelectList(itemTemaService.TodosOsItensTemas().OrderBy(b => b.Nome), "TemaId", "Nome", item.TemaId);
             return View(item);
         }
 
@@ -87,7 +87,7 @@ namespace exercicio_cap4.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    itemTemaDAL.AtualizarItemTema(item);
+                    itemTemaService.AtualizarItemTema(item);
                     return RedirectToAction("Index");
                 }
                 return View(item);
@@ -105,7 +105,7 @@ namespace exercicio_cap4.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ItemTema item = itemTemaDAL.ItemTemaPorID(id);
+            ItemTema item = itemTemaService.ItemTemaPorID(id);
 
             if (item == null)
             {
@@ -120,7 +120,7 @@ namespace exercicio_cap4.Controllers
         {
             try
             {
-                itemTemaDAL.DeletarItemTema(id);
+                itemTemaService.DeletarItemTema(id);
                 TempData["Message"] = "ItemTema foi removido";
                 return RedirectToAction("Index");
             }

@@ -215,6 +215,8 @@
     <Compile Include="Models\Home.cs" />
     <Compile Include="Models\ItemTema.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\TemaService.cs" />
+    <Compile Include="Service\ItemTemaService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />

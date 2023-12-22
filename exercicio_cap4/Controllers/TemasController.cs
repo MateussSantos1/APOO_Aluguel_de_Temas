@@ -5,19 +5,19 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using exercicio_cap4.DAL;
+using exercicio_cap4.Services;
 using exercicio_cap4.Models;
 
 namespace exercicio_cap4.Controllers
 {
     public class TemasController : Controller
     {
-        private TemaDAL temaDAL = new TemaDAL();
+        private TemaService temaService = new TemaService();
 
         // GET: Temas
         public ActionResult Index()
         {
-            var temas = temaDAL.TodososTemas();
+            var temas = temaService.TodososTemas();
             return View(temas);
         }
 
@@ -33,7 +33,7 @@ namespace exercicio_cap4.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tema tema = temaDAL.TemasporID(id);
+            Tema tema = temaService.TemasporID(id);
             if (tema == null)
             {
                 return HttpNotFound();
@@ -48,7 +48,7 @@ namespace exercicio_cap4.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tema tema = temaDAL.TemasporID(id);
+            Tema tema = temaService.TemasporID(id);
             if (tema == null)
             {
                 return HttpNotFound();
@@ -61,7 +61,7 @@ namespace exercicio_cap4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(long id)
         {
-            temaDAL.DeletarTema(id);
+            temaService.DeletarTema(id);
             TempData["Message"] = "Tema foi removido";
             return RedirectToAction("Index");
         }
@@ -72,7 +72,7 @@ namespace exercicio_cap4.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tema tema = temaDAL.TemasporID(id);
+            Tema tema = temaService.TemasporID(id);
             if (tema == null)
             {
                 return HttpNotFound();
@@ -86,7 +86,7 @@ namespace exercicio_cap4.Controllers
         {
             if (ModelState.IsValid)
             {
-                temaDAL.AtualizarTema(tema);
+                temaService.AtualizarTema(tema);
                 TempData["Message"] = "Tema foi modificado";
                 return RedirectToAction("Index");
             }
@@ -97,7 +97,7 @@ namespace exercicio_cap4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Tema tema)
         {
-            temaDAL.AdicionarTema(tema);
+            temaService.AdicionarTema(tema);
             TempData["Message"] = "Tema foi registrado";
             return RedirectToAction("Index");
         }
