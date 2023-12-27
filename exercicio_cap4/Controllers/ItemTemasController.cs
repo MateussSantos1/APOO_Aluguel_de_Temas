@@ -121,7 +121,7 @@ namespace exercicio_cap4.Controllers
             try
             {
                 itemTemaService.DeletarItemTema(id);
-                TempData["Message"] = "ItemTema foi removido";
+                TempData["Message"] = "Item foi removido com sucesso!!";
                 return RedirectToAction("Index");
             }
             catch
